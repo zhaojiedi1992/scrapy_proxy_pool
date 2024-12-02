@@ -1,15 +1,12 @@
 from environs import Env
+import os
 
 env = Env()
 env.read_env()
+BASE_DIR = os.path.dirname(__file__)
 
-# Redis setttings
-REDIS_HOST = env.str("REDIS_HOST", "127.0.0.1")
-REDIS_PORT = env.str("REDIS_PORT", "6379")
-REDIS_DB = env.str("REDIS_DB", "0")
-REDIS_PASSWORD = env.str("REDIS_PASSWORD", "zhaojiedi")
-REDIS_KEY_PREFIX = env.str("REDIS_KEY_PREFIX", "proxy:scrapy")
-REDIS_STORAGE_LIMIT = env.int("REDIS_STORAGE_LIMIT", 5000)
+
+
 
 # define proxy scores
 PROXY_SCORE_MAX = env.int('PROXY_SCORE_MAX', 100)
@@ -43,3 +40,23 @@ ENABLE_GETTER = env.bool('ENABLE_GETTER', True)
 ENABLE_SERVER = env.bool('ENABLE_SERVER', True)
 ENGINE_CYCLE_GETTER = env.int('ENGINE_CYCLE_GETTER', 10)
 ENGINE_CYCLE_TESTER =env.int('ENGINE_CYCLE_TESTER',10)
+
+TESTER_LOG_PATH = env.str('TESTER_LOG', os.path.join(BASE_DIR,'logs/tester.log'))
+GETTER_LOG_PATH = env.str('GETTER_LOG', os.path.join(BASE_DIR,'logs/getter.log'))
+SERVER_LOG_PATH = env.str('SERVER_LOG', os.path.join(BASE_DIR,'logs/server.log'))
+CRAWLER_LOG_PATH = env.str('CRAWLER_LOG', os.path.join(BASE_DIR,'logs/crawler.log'))
+ENGINE_LOG_PATH = env.str('ENGINE_LOG', os.path.join(BASE_DIR,'logs/engine.log'))
+
+# sqllite settings
+SQLITE_DB_PATH= env.str('SQLITE_DB_PATH', os.path.join(BASE_DIR,'files/proxy.db'))
+SQLITE_STORAGE_LIMIT =env.int('SQLITE_STORAGE_LIMIT', 5000)
+
+# Redis settings
+REDIS_HOST = env.str("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = env.str("REDIS_PORT", "6379")
+REDIS_DB = env.str("REDIS_DB", "0")
+REDIS_PASSWORD = env.str("REDIS_PASSWORD", "zhaojiedi")
+REDIS_KEY_PREFIX = env.str("REDIS_KEY_PREFIX", "proxy:scrapy")
+REDIS_STORAGE_LIMIT = env.int("REDIS_STORAGE_LIMIT", 5000)
+
+USE_DB = env.str("USE_DB", "SQLITE")

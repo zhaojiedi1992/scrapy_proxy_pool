@@ -1,22 +1,24 @@
 import asyncio
 import aiohttp
-from loguru import logger
 
 import settings
 from schemas.proxy import Proxy
+from storages.get_storage import DEFAULT_STORAGE_CLASS
 from storages.redis_storage import RedisStorage
+from utils.log import SimpleLogger
 
 
 class Tester(object):
-    def __init__(self,storage=RedisStorage):
+    def __init__(self,storage=DEFAULT_STORAGE_CLASS):
         self.storage = storage.get_client_from_config()
         self.loop = asyncio.get_event_loop()
+        self.logger = SimpleLogger(log_file=settings.TESTER_LOG_PATH)
         pass
     def run(self):
-        logger.info('stating tester...')
+        self.logger.info('stating tester...')
         cursor =0
         while True:
-            logger.debug(f'testing proxies use cursor {cursor}, count {settings.TEST_BATCH_COUNT}')
+            self.logger.debug(f'testing proxies use cursor {cursor}, count {settings.TEST_BATCH_COUNT}')
             cursor, proxies = self.storage.batch(cursor, count=settings.TEST_BATCH_COUNT)
             if proxies:
                 tasks = [self.loop.create_task(self.test(proxy)) for proxy in proxies]
@@ -27,7 +29,7 @@ class Tester(object):
     async def test(self, proxy: Proxy):
         async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
             try:
-                logger.debug(f'testing proxy {proxy}')
+                self.logger.debug(f'testing proxy {proxy}')
                 if settings.TEST_ANONYMOUS:
                     url = 'https://httpbin.org/ip'
                     async with session.get(url, timeout=settings.TEST_TIMEOUT) as response:
@@ -42,16 +44,16 @@ class Tester(object):
                                        allow_redirects=False) as response:
                     if response.status in settings.TEST_VALID_STATUS:
                         if settings.TEST_DONT_SET_MAX_SCORE:
-                            logger.debug(f'proxy {proxy} is valid, remain current score')
+                            self.logger.debug(f'proxy {proxy} is valid, remain current score')
                         else:
                             self.storage.max(proxy)
-                            logger.debug(f'proxy {proxy} is valid, set max score')
+                            self.logger.debug(f'proxy {proxy} is valid, set max score')
                     else:
                         self.storage.decrease(proxy)
-                        logger.debug(f'proxy {proxy} is invalid, decrease score')
+                        self.logger.debug(f'proxy {proxy} is invalid, decrease score')
             except Exception:
                 self.storage.decrease(proxy)
-                logger.debug(f'proxy {proxy} is invalid, decrease score')
+                self.logger.debug(f'proxy {proxy} is invalid, decrease score')
 
 def run_tester():
     host = '96.113.165.182'
