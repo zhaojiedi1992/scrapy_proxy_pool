@@ -8,6 +8,9 @@ from retrying import RetryError, retry
 
 import settings
 from storages.base import BaseStorage
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class BaseCrawler(metaclass=ABCMeta):

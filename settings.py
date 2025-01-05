@@ -18,7 +18,7 @@ CRAWL_TIMEOUT = env.int("CRAWL_TIMEOUT", 10)
 
 # tester settings
 TEST_BATCH_COUNT = env.int("TEST_BATCH_COUNT", 100)
-TEST_URL = env.str('TEST_URL', 'http://www.baidu.com')
+TEST_URL = env.str('TEST_URL', 'https://www.baidu.com')
 TEST_TIMEOUT = env.int('TEST_TIMEOUT', 10)
 # only save anonymous proxy
 TEST_ANONYMOUS = env.bool('TEST_ANONYMOUS', True)

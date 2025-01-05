@@ -20,7 +20,7 @@ class SimpleLogger:
         # 配置文件处理器
         log_dir = os.path.dirname(log_file)
         if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
+            os.makedirs(log_dir, exist_ok=True)
 
         file_handler = RotatingFileHandler(log_file, maxBytes=max_bytes, backupCount=backup_count)
         file_handler.setLevel(log_level)

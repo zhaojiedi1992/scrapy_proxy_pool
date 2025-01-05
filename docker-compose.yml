@@ -4,13 +4,16 @@ services:
     image: redis:alpine
     container_name: redis4proxypool
   proxypool:
-    build: .
+#    build: .
     image: "zhaojiedi/scrapy_proxy_pool:latest"
     container_name: proxypool
+    #network_mode: "host"
     ports:
       - "5555:5555"
+      - "8080:5555"
     restart: always
     # volumes:
     #   - proxypool/crawlers/private:~/proxypool/crawlers/private
     environment:
       REDIS_HOST: redis4proxypool
+      REDIS_PORT: 6379

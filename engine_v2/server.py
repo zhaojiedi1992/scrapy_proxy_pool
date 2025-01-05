@@ -45,4 +45,5 @@ def get_conn():
 
 
 if __name__ == '__main__':
-    app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT, threaded=settings.SERVER_THREAD,logger=logger)
+    logger.info("server start")
+    app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT, threaded=settings.SERVER_THREAD,logger=logger,debug=True)
