@@ -31,7 +31,7 @@ TEST_DONT_SET_MAX_SCORE = env.bool('TEST_DONT_SET_MAX_SCORE', False)
 
 # server settings
 SERVER_HOST = env.str('SERVER_HOST', '127.0.0.1')
-SERVER_PORT = env.int('SERVER_PORT', 8001)
+SERVER_PORT = env.int('SERVER_PORT', 5555)
 SERVER_THREAD = env.int('SERVER_THREAD', 10)
 
 #engine settings
@@ -55,8 +55,8 @@ SQLITE_STORAGE_LIMIT =env.int('SQLITE_STORAGE_LIMIT', 5000)
 REDIS_HOST = env.str("REDIS_HOST", "127.0.0.1")
 REDIS_PORT = env.str("REDIS_PORT", "6379")
 REDIS_DB = env.str("REDIS_DB", "0")
-REDIS_PASSWORD = env.str("REDIS_PASSWORD", "zhaojiedi")
+REDIS_PASSWORD = env.str("REDIS_PASSWORD", None)
 REDIS_KEY_PREFIX = env.str("REDIS_KEY_PREFIX", "proxy:scrapy")
 REDIS_STORAGE_LIMIT = env.int("REDIS_STORAGE_LIMIT", 5000)
 
-USE_DB = env.str("USE_DB", "SQLITE")
+USE_DB = env.str("USE_DB", "REDIS")

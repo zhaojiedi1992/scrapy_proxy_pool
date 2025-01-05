@@ -1,10 +1,7 @@
 import settings
-from crawlers.zhandaye import ZhangDaYeCrawler
 from storages.get_storage import DEFAULT_STORAGE_CLASS
-from storages.redis_storage import RedisStorage
 
 from crawlers import CRAWLER_CLASS_LIST
-from storages.sqllite_storage import SQLiteStorage
 from utils.log import SimpleLogger
 
 
