@@ -9,8 +9,7 @@ services:
     container_name: proxypool
     #network_mode: "host"
     ports:
-      - "5555:5555"
-      - "8080:5555"
+    - "5555:5555"
     restart: always
     # volumes:
     #   - proxypool/crawlers/private:~/proxypool/crawlers/private

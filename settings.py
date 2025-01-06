@@ -30,9 +30,9 @@ TEST_VALID_STATUS = env.list('TEST_VALID_STATUS', [200, 206, 302])
 TEST_DONT_SET_MAX_SCORE = env.bool('TEST_DONT_SET_MAX_SCORE', False)
 
 # server settings
-SERVER_HOST = env.str('SERVER_HOST', '127.0.0.1')
+SERVER_HOST = env.str('SERVER_HOST', '0.0.0.0')
 SERVER_PORT = env.int('SERVER_PORT', 5555)
-SERVER_THREAD = env.int('SERVER_THREAD', 10)
+SERVER_THREAD = env.int('SERVER_THREAD', 20)
 
 #engine settings
 ENABLE_TESTER = env.bool('ENABLE_TESTER', True)
