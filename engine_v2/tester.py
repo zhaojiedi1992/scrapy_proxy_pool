@@ -35,7 +35,7 @@ class Tester(object):
                     async with session.get(url, timeout=settings.TEST_TIMEOUT) as response:
                         resp_json = await response.json()
                         origin_ip = resp_json['origin']
-                    async with session.get(url, proxy=f'http://{proxy.string()}', timeout=settings.TEST_TIMEOUT) as response:
+                    async with session.get(url, proxy=f'http://{proxy}', timeout=settings.TEST_TIMEOUT) as response:
                         resp_json = await response.json()
                         anonymous_ip = resp_json['origin']
                     assert origin_ip != anonymous_ip

@@ -14,6 +14,7 @@ base_url = 'https://www.zdaye.com/dayProxy/{page}.html'
 max_page = 10
 
 class ZhangDaYeCrawler(BaseCrawler):
+    enable=True
     name = 'ZhangDaYe'
     urls = []
     catalog_urls = [base_url.format(page=page) for page in range(1, max_page)]

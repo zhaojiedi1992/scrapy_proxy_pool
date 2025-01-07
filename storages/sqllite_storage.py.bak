@@ -4,7 +4,7 @@ from abc import ABC
 from loguru import logger
 from schemas.proxy import Proxy
 from settings import SQLITE_DB_PATH, PROXY_SCORE_MAX, PROXY_SCORE_MIN, PROXY_SCORE_INIT, SQLITE_STORAGE_LIMIT
-from utils.proxy import extract_auth_proxy, is_valid_proxy
+# from utils.proxy import extract_auth_proxy, is_valid_proxy
 
 class SQLiteStorage(ABC):
     def __init__(self, db_path):
