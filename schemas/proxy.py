@@ -30,5 +30,8 @@ class Proxy(object):
         return self.__str__()
 
     def to_json(self):
-        return json.dumps({"host":self.host,"port":self.port,"proxy": f'{self.host}:{self.port}'})
+        return json.dumps(self.to_dict())
+
+    def to_dict(self):
+        return {"host":self.host,"port":self.port,"proxy": f'{self.host}:{self.port}'}
 

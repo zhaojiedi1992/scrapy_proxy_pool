@@ -1,12 +1,13 @@
 import json
 
-from flask import Flask,g
+from flask import Flask, g, jsonify
 from loguru import logger
 
 import settings
 from storages.get_storage import DEFAULT_STORAGE_CLASS
 from storages.redis_storage import RedisStorage
 from utils.log import SimpleLogger
+from panda_python_kit.comm.result_model import ResultModel
 
 app = Flask(__name__)
 logger = SimpleLogger(log_file=settings.SERVER_LOG_PATH)
@@ -16,8 +17,8 @@ logger = SimpleLogger(log_file=settings.SERVER_LOG_PATH)
 def hello_world():
     return ("""
      "<p>welcom to scrapy proxy pool system !</p>
-     <li>/get_proxy</li>
-     <li>/get_all</li>
+      <li><a href="/get_proxy">/get_proxy<a></li>
+      <li><a href="/get_all">/get_all<a></li>
     
     """)
 
@@ -26,8 +27,10 @@ def hello_world():
 def get_proxy():
     conn = get_conn()
     proxy = conn.random()
-    return  proxy.to_json()
-
+    # 如果抛出异常，返回错误信息
+    if not proxy:
+        return jsonify(ResultModel(data=None, success=False, message="no proxy").to_dict())
+    return jsonify(ResultModel(data=proxy).to_dict())
 # @app.route("/get_all")
 # def get_all():
 #     conn = get_conn()
@@ -37,7 +40,8 @@ def get_proxy():
 @app.route("/count")
 def get_count():
     conn = get_conn()
-    return {"count": conn.count()}
+    return jsonify(ResultModel(data=conn.count()).to_dict())
+
 def get_conn():
     if not hasattr(g,'conn'):
         g.conn = DEFAULT_STORAGE_CLASS.get_client_from_config()
