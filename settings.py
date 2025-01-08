@@ -10,7 +10,7 @@ BASE_DIR = os.path.dirname(__file__)
 
 # define proxy scores
 PROXY_SCORE_MAX = env.int('PROXY_SCORE_MAX', 100)
-PROXY_SCORE_MIN = env.int('PROXY_SCORE_MIN', 8)
+PROXY_SCORE_MIN = env.int('PROXY_SCORE_MIN', 11)
 PROXY_SCORE_INIT = env.int('PROXY_SCORE_INIT', 10)
 
 # crawler settings

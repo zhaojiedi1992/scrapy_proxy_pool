@@ -25,7 +25,7 @@ class Getter:
                     proxy.country = info.country_short
                     proxy.province = info.region
                     proxy.city = info.city
-                except:
+                except Exception as e:
                     pass
                 self.logger.debug(f'add proxy {proxy} to storage')
                 self.storage_class.add(proxy)

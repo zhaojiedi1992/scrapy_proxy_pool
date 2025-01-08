@@ -5,6 +5,7 @@ from loguru import logger
 from panda_python_kit.comm.comm import get_request_data
 
 import settings
+from schemas.proxy import Proxy
 from storages.get_storage import DEFAULT_STORAGE_CLASS
 from storages.redis_storage import RedisStorage
 from utils.log import SimpleLogger
@@ -37,11 +38,22 @@ def get_one():
         return jsonify(ResultModel(data=None, success=False, message="no proxy").to_dict())
     return jsonify(ResultModel(data=proxy).to_dict())
 
+@app.route("/get_all")
+def get_all():
+    conn = get_conn()
+    proxies = conn.all()
+    
+    return jsonify(ResultModel(data={
+        "proxies":proxies,
+        "count":len(proxies)
+    }).to_dict())
 @app.route("/pop_one")
 def pop_one():
     conn = get_conn()
     proxy= get_request_data(request=request).get("proxy")
-    remove_result = conn.remove(extract_auth_proxy(proxy))
+    if proxy is None:
+        return jsonify(ResultModel(data=None, success=False, message="proxy 不能为空").to_dict())
+    remove_result = conn.remove(Proxy.fill_proxy_info(proxy))
     if remove_result:
         return jsonify(ResultModel(data=proxy).to_dict())
     return jsonify(ResultModel(data=proxy,success=False,message="proxy 不存在").to_dict())
@@ -52,6 +64,11 @@ def pop_one():
 def get_count():
     conn = get_conn()
     return jsonify(ResultModel(data=conn.count()).to_dict())
+
+@app.route("/statistics")
+def statistics():
+    conn = get_conn()
+    return jsonify(ResultModel(data=conn.statistics()).to_dict())
 
 def get_conn():
     if not hasattr(g,'conn'):

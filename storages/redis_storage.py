@@ -53,6 +53,19 @@ class RedisStorage(BaseStorage):
             return Proxy.load_proxy(random.choice(proxies))
         raise Exception('No proxy available')
 
+    def all(self):
+        proxies = self.client.zrangebyscore(settings.REDIS_KEY_PREFIX, settings.PROXY_SCORE_MAX,
+                                            settings.PROXY_SCORE_MAX)
+        if len(proxies) > 0:
+            return [Proxy.load_proxy(proxy) for proxy in proxies]
+
+        proxies = self.client.zrangebyscore(settings.REDIS_KEY_PREFIX, settings.PROXY_SCORE_MIN,
+                                            settings.PROXY_SCORE_MAX)
+        if len(proxies) > 0:
+            return[Proxy.load_proxy(proxy) for proxy in proxies]
+        return []
+
+
     def batch(self,cursor,count):
         cursor, proxies = self.client.zscan(settings.REDIS_KEY_PREFIX, cursor, count=count)
         return cursor, [Proxy.load_proxy(i[0]) for i in proxies]
