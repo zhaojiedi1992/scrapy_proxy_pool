@@ -21,7 +21,7 @@ class DaiLi66Crawler(BaseCrawler):
         """
         response = Selector(text=html)
         for tr in response.xpath("//table)[3]//tr"):
-            print(tr)
+            #print(tr)
             ip = "".join(tr.xpath("./td[1]/text()")).strip()
             port = "".join(tr.xpath("./td[2]/text()")).strip()
             if ip and port:

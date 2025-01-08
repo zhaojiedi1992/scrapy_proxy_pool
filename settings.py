@@ -14,10 +14,10 @@ PROXY_SCORE_MIN = env.int('PROXY_SCORE_MIN', 11)
 PROXY_SCORE_INIT = env.int('PROXY_SCORE_INIT', 10)
 
 # crawler settings
-CRAWL_TIMEOUT = env.int("CRAWL_TIMEOUT", 10)
+CRAWL_TIMEOUT = env.int("CRAWL_TIMEOUT", 20)
 
 # tester settings
-TEST_BATCH_COUNT = env.int("TEST_BATCH_COUNT", 100)
+TEST_BATCH_COUNT = env.int("TEST_BATCH_COUNT", 500)
 TEST_URL = env.str('TEST_URL', 'https://www.baidu.com')
 TEST_TIMEOUT = env.int('TEST_TIMEOUT', 10)
 # only save anonymous proxy

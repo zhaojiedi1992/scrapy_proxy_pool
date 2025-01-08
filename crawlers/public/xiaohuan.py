@@ -16,7 +16,7 @@ class XiaoHuanCrawler(BaseCrawler):
     def parse_content(self, html):
         response = Selector(text=html)
         for tr in response.css("tbody tr"):
-            print(tr)
+            #print(tr)
             ip =11
             port = "".join(tr.xpath("./td[2]/text()")).strip()
             if ip and port:

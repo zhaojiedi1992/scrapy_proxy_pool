@@ -11,7 +11,7 @@ class V89Crawler(BaseCrawler):
      89 https://www.89ip.cn/
     """
     urls = [BASE_URL]
-    enable = True
+    enable = False
     name = "https://www.89ip.cn/"
 
     def parse_content(self, html):

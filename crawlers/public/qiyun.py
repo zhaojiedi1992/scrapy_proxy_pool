@@ -18,7 +18,7 @@ class QiYunCrawler(BaseCrawler):
     def parse_content(self, html):
         response = Selector(text=html)
         for tr in response.css("table tbody tr"):
-            print(tr)
+            #print(tr)
             # 使用css选择器提前第一个td标签的文本内容
             ip = tr.css("td:nth-child(1)::text").get().strip()
             port = tr.css("td:nth-child(2)::text").get().strip()

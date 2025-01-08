@@ -59,4 +59,4 @@ class BaseCrawler(metaclass=ABCMeta):
                 time.sleep(0.5)
                 yield from self.process(html, url)
         except RetryError as e:
-            logger.error(f'crawl {self.name} error')
+            logger.error(f'crawl {self.name} error: {e}')
